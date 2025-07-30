@@ -54,7 +54,6 @@ def get_gemini_response(prompt):
     import re
     from templates import PERSONA_RULES
 
-
     api_key = os.getenv("GEMINI_API_KEY")
     if not api_key:
         return None
@@ -62,20 +61,30 @@ def get_gemini_response(prompt):
     genai.configure(api_key=api_key, transport="rest")
     model = genai.GenerativeModel("gemini-2.5-flash-lite")
 
-
     persona = PERSONA_RULES.strip()
     name = os.getenv("NAME", "")
     email = os.getenv("EMAIL", "")
     student_id = os.getenv("STUDENT_ID", "")
     github = os.getenv("GITHUB", "")
     linkedin = os.getenv("LINKEDIN", "")
+    instagram = os.getenv("INSTAGRAM", "")      # NEW
+    x_link = os.getenv("X", "")                 # NEW
 
     user_info = f"""User Information:
+
 - Name: {name}
+
 - Email: {email}
+
 - Student ID: {student_id}
+
 - GitHub: {github}
+
 - LinkedIn: {linkedin}
+
+- Instagram: {instagram}
+
+- X: {x_link}
 """
 
     final_prompt = f"{persona}\n\n{user_info}\nRespond directly. Do not ask for more info.\n\nPrompt: {prompt.strip()}"
